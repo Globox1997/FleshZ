@@ -2,29 +2,24 @@
   "schemaVersion": 1,
   "id": "fleshz",
   "version": "1.1.0",
-
   "name": "FleshZ",
   "description": "Just another rottenflesh to leather mod",
   "authors": [
     "Globox_Z"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/fleshz",
+    "sources": "https://github.com/Globox1997/FleshZ"
   },
-
-  "license": "CC0-1.0",
+  "license": "MIT License",
   "icon": "assets/rotten/flesh.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
       "net.rotten.leth"
     ]
   },
-  "mixins": [
-  ],
-
+  "mixins": [],
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
