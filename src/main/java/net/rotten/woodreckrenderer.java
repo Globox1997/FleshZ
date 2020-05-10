@@ -9,24 +9,29 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.client.render.model.json.ModelTransformation;
 
-public class woodreckrenderer extends BlockEntityRenderer<woodreckentity> {
-  private ItemStack stack = new ItemStack(leth.FLESH, 1);
+public class WoodReckRenderer extends BlockEntityRenderer<WoodReckEntity> {
+  private ItemStack stack = new ItemStack(Leather.FLESH, 1);
 
-  public woodreckrenderer(BlockEntityRenderDispatcher dispatcher) {
+  public WoodReckRenderer(BlockEntityRenderDispatcher dispatcher) {
     super(dispatcher);
   }
 
   @Override
-  public void render(woodreckentity blockEntity, float tickDelta, MatrixStack matrices,
+  public void render(WoodReckEntity blockEntity, float tickDelta, MatrixStack matrices,
       VertexConsumerProvider vertexConsumers, int light, int overlay) {
+
     World world = blockEntity.getWorld();
+    BlockPos pos = blockEntity.getPos();
     BlockState state = blockEntity.getWorld().getBlockState(blockEntity.getPos());
     Direction o = state.get(HorizontalFacingBlock.FACING);
-    if (leth.FLESH.isonrack == true && world.isClient) {
+
+    if (// Leather.WOOD_RECK_ENTITY.get(world, pos).isOnRack
+    blockEntity.isOnRack == true && world.isClient && state.getBlock() instanceof WoodReck) {
       if (o == Direction.NORTH) {
         matrices.push();
         matrices.translate(0.5D, 0.5D, 0.9D);

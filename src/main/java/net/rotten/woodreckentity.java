@@ -8,12 +8,13 @@ import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class woodreckentity extends BlockEntity implements Tickable {
-  private int dryingtime = 200;
+public class WoodReckEntity extends BlockEntity implements Tickable {
+  public int dryingTime = 200;
   private int requiredPlayerRange = 16;
+  public boolean isOnRack = false;
 
-  public woodreckentity() {
-    super(leth.WOODRECKENTITY);
+  public WoodReckEntity() {
+    super(Leather.WOOD_RECK_ENTITY);
   }
 
   @Override
@@ -31,14 +32,14 @@ public class woodreckentity extends BlockEntity implements Tickable {
     if (this.isPlayerInRange()) {
       World world = this.getWorld();
       BlockPos blockPos = this.getPos();
-      if (!world.isClient && leth.FLESH.isonrack == true) {
-        dryingtime--;
-        if (dryingtime <= 0) {
+      if (!world.isClient && this.isOnRack == true) {
+        dryingTime--;
+        if (dryingTime <= 0) {
           ItemStack sulfurdrop = new ItemStack(Items.LEATHER, 1);
-          leth.FLESH.isonrack = false;
+          this.isOnRack = false;
           world.getBlockState(blockPos).getBlock();
           Block.dropStack(world, pos, sulfurdrop);
-          dryingtime = 200;
+          dryingTime = 200;
         }
       }
     }

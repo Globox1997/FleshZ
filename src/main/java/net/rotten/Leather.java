@@ -9,21 +9,21 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class leth implements ModInitializer {
+public class Leather implements ModInitializer {
 
-    public static final flesh FLESH = new flesh();
-    public static final woodreck WOODRECK = new woodreck(FabricBlockSettings.copy(Blocks.OAK_PLANKS));
-    public static final BlockEntityType<woodreckentity> WOODRECKENTITY = BlockEntityType.Builder
-            .create(woodreckentity::new, WOODRECK).build(null);;
+    public static final Flesh FLESH = new Flesh();
+    public static final WoodReck WOOD_RECK = new WoodReck(FabricBlockSettings.copy(Blocks.OAK_PLANKS));
+    public static final BlockEntityType<WoodReckEntity> WOOD_RECK_ENTITY = BlockEntityType.Builder
+            .create(WoodReckEntity::new, WOOD_RECK).build(null);;
 
     @Override
     public void onInitialize() {
 
         Registry.register(Registry.ITEM, new Identifier("rotten", "flesh"), FLESH);
         Registry.register(Registry.ITEM, new Identifier("rotten", "woodreck"),
-                new BlockItem(WOODRECK, new Item.Settings()));
-        Registry.register(Registry.BLOCK, new Identifier("rotten", "woodreck"), WOODRECK);
-        Registry.register(Registry.BLOCK_ENTITY_TYPE, "rotten:woodreckentity", WOODRECKENTITY);
+                new BlockItem(WOOD_RECK, new Item.Settings()));
+        Registry.register(Registry.BLOCK, new Identifier("rotten", "woodreck"), WOOD_RECK);
+        Registry.register(Registry.BLOCK_ENTITY_TYPE, "rotten:woodreckentity", WOOD_RECK_ENTITY);
     }
 }
 

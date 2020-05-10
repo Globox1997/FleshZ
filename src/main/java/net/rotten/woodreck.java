@@ -7,38 +7,59 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityContext;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
-public class woodreck extends Block implements BlockEntityProvider {
+public class WoodReck extends Block implements BlockEntityProvider {
 
-  protected static final VoxelShape SHAPENORTH;
-  protected static final VoxelShape SHAPEWEST;
-  protected static final VoxelShape SHAPEEAST;
-  protected static final VoxelShape SHAPESOUTH;
+  public static final VoxelShape SHAPENORTH;
+  public static final VoxelShape SHAPEWEST;
+  public static final VoxelShape SHAPEEAST;
+  public static final VoxelShape SHAPESOUTH;
   public static final DirectionProperty FACING;
   public static final BooleanProperty WATERLOGGED;
 
-  public woodreck(Settings settings) {
+  public WoodReck(Settings settings) {
     super(settings);
+    this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH).with(WATERLOGGED, false));
+  }
+
+  @Override
+  public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
+      BlockHitResult hit) {
+    ItemStack item = player.getMainHandStack();
+    if (state.getBlock() instanceof WoodReck) {
+      if (!world.isClient && Leather.WOOD_RECK_ENTITY.get(world, pos).dryingTime == 200) {
+        item.decrement(1);
+        Leather.WOOD_RECK_ENTITY.get(world, pos).isOnRack = true;
+      }
+      return ActionResult.SUCCESS;
+    } else
+      return ActionResult.PASS;
   }
 
   @Override
   public BlockEntity createBlockEntity(BlockView view) {
-    return new woodreckentity();
+    return new WoodReckEntity();
   }
 
   @Override

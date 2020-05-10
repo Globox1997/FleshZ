@@ -16,10 +16,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.rotten.leth"
+      "net.rotten.Leather"
     ],
     "client": [
-      "net.rotten.lethclient"
+      "net.rotten.LeatherClient"
     ]
   },
   "mixins": [],
