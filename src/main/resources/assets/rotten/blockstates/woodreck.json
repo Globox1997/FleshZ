@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=south": {
+      "model": "rotten:block/woodreck"
+    },
+    "facing=west": {
+      "model": "rotten:block/woodreck",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "rotten:block/woodreck",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "rotten:block/woodreck",
+      "y": 270
+    }
+  }
+}

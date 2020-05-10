@@ -1,0 +1,53 @@
+{
+  "textures": {
+    "particle": "block/oak_planks",
+      "woodreck": "rotten:block/woodreck"
+  },
+  "display": {
+      "gui": {
+          "rotation": [ 30, 45, 0 ],
+          "translation": [ 0, 0, 0 ],
+          "scale": [ 0.625, 0.625, 0.625 ]
+      },
+      "ground": {
+          "rotation": [ 0, 0, 0 ],
+          "translation": [ 0, 3, 0 ],
+          "scale": [ 0.25, 0.25, 0.25 ]
+      },
+      "fixed": {
+          "rotation": [ 0, 180, 0 ],
+          "translation": [ 0, 0, 0 ],
+          "scale": [ 1, 1, 1 ]
+      },
+      "head": {
+          "rotation": [ 0, 180, 0 ],
+          "translation": [ 0, 0, 0 ],
+          "scale": [ 1, 1, 1 ]
+      },
+      "firstperson_righthand": {
+          "rotation": [ 0, 315, 0 ],
+          "translation": [ 0, 2.5, 0 ],
+          "scale": [ 0.4, 0.4, 0.4 ]
+      },
+      "thirdperson_righthand": {
+          "rotation": [ 75, 315, 0 ],
+          "translation": [ 0, 2.5, 0 ],
+          "scale": [ 0.375, 0.375, 0.375 ]
+      }
+  },
+  "elements": [
+      {
+          "name": "Cube",
+          "from": [ 0, 13, 0 ], 
+          "to": [ 16, 16, 3 ], 
+          "faces": {
+              "north": { "texture": "#woodreck", "uv": [ 0, 1, 16, 4 ] },
+              "east": { "texture": "#woodreck", "uv": [ 2, 1, 5, 4 ] },
+              "south": { "texture": "#woodreck", "uv": [ 0, 1, 16, 4 ] },
+              "west": { "texture": "#woodreck", "uv": [ 12, 1, 15, 4 ] },
+              "up": { "texture": "#woodreck", "uv": [ 0, 0, 16, 3 ] },
+              "down": { "texture": "#woodreck", "uv": [ 0, 4, 16, 7 ] }
+          }
+      }
+  ]
+}
