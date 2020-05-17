@@ -8,14 +8,10 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
 import net.minecraft.client.render.model.json.ModelTransformation;
 
 public class WoodReckRenderer extends BlockEntityRenderer<WoodReckEntity> {
-  private ItemStack stack = new ItemStack(Leather.FLESH, 1);
 
   public WoodReckRenderer(BlockEntityRenderDispatcher dispatcher) {
     super(dispatcher);
@@ -24,42 +20,41 @@ public class WoodReckRenderer extends BlockEntityRenderer<WoodReckEntity> {
   @Override
   public void render(WoodReckEntity blockEntity, float tickDelta, MatrixStack matrices,
       VertexConsumerProvider vertexConsumers, int light, int overlay) {
-
-    World world = blockEntity.getWorld();
-    BlockPos pos = blockEntity.getPos();
     BlockState state = blockEntity.getWorld().getBlockState(blockEntity.getPos());
-    Direction o = state.get(HorizontalFacingBlock.FACING);
-
-    if (// Leather.WOOD_RECK_ENTITY.get(world, pos).isOnRack
-    blockEntity.isOnRack == true && world.isClient && state.getBlock() instanceof WoodReck) {
-      if (o == Direction.NORTH) {
+    Direction blockDirection = state.get(HorizontalFacingBlock.FACING);
+    if (!blockEntity.isInvEmpty()) {
+      if (blockDirection == Direction.NORTH) {
         matrices.push();
-        matrices.translate(0.5D, 0.5D, 0.9D);
-        MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, light,
-            overlay, matrices, vertexConsumers);
+        matrices.scale(1.8F, 1.8F, 1.8F);
+        matrices.translate(0.28D, 0.12D, 0.5D);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getInvStack(0),
+            ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers);
         matrices.pop();
       } else {
-        if (o == Direction.SOUTH) {
+        if (blockDirection == Direction.SOUTH) {
           matrices.push();
-          matrices.translate(0.5D, 0.5D, 0.1D);
-          MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, light,
-              overlay, matrices, vertexConsumers);
+          matrices.scale(1.8F, 1.8F, 1.8F);
+          matrices.translate(0.28D, 0.12D, 0.05D);
+          MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getInvStack(0),
+              ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers);
           matrices.pop();
         } else {
-          if (o == Direction.EAST) {
+          if (blockDirection == Direction.EAST) {
             matrices.push();
-            matrices.translate(0.1D, 0.5D, 0.5D);
+            matrices.scale(1.8F, 1.8F, 1.8F);
+            matrices.translate(0.05D, 0.12D, 0.28D);
             matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((90F)));
-            MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, light,
-                overlay, matrices, vertexConsumers);
+            MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getInvStack(0),
+                ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers);
             matrices.pop();
           } else {
-            if (o == Direction.WEST) {
+            if (blockDirection == Direction.WEST) {
               matrices.push();
-              matrices.translate(0.9D, 0.5D, 0.5D);
+              matrices.scale(1.8F, 1.8F, 1.8F);
+              matrices.translate(0.5D, 0.12D, 0.28D);
               matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((90F)));
-              MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Mode.GROUND, light,
-                  overlay, matrices, vertexConsumers);
+              MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getInvStack(0),
+                  ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers);
               matrices.pop();
             }
           }

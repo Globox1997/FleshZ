@@ -6,6 +6,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -21,7 +22,7 @@ public class Leather implements ModInitializer {
 
         Registry.register(Registry.ITEM, new Identifier("rotten", "flesh"), FLESH);
         Registry.register(Registry.ITEM, new Identifier("rotten", "woodreck"),
-                new BlockItem(WOOD_RECK, new Item.Settings()));
+                new BlockItem(WOOD_RECK, new Item.Settings().group(ItemGroup.DECORATIONS)));
         Registry.register(Registry.BLOCK, new Identifier("rotten", "woodreck"), WOOD_RECK);
         Registry.register(Registry.BLOCK_ENTITY_TYPE, "rotten:woodreckentity", WOOD_RECK_ENTITY);
     }

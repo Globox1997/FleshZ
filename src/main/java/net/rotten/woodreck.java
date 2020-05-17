@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
@@ -46,15 +47,22 @@ public class WoodReck extends Block implements BlockEntityProvider {
   @Override
   public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
       BlockHitResult hit) {
-    ItemStack item = player.getMainHandStack();
-    if (state.getBlock() instanceof WoodReck) {
-      if (!world.isClient && Leather.WOOD_RECK_ENTITY.get(world, pos).dryingTime == 200) {
-        item.decrement(1);
-        Leather.WOOD_RECK_ENTITY.get(world, pos).isOnRack = true;
-      }
+    Inventory blockEntity = (Inventory) world.getBlockEntity(pos);
+    ItemStack stack = blockEntity.getInvStack(0);
+    if (!stack.isEmpty()) {
+      // Remove hanging item
+      player.giveItemStack(stack);
+      blockEntity.clear();
       return ActionResult.SUCCESS;
-    } else
-      return ActionResult.PASS;
+    } else {
+      // Hang item on rack
+      ItemStack heldItem = player.getMainHandStack();
+      if (!heldItem.isEmpty() && heldItem.isItemEqual(new ItemStack(Leather.FLESH))) {
+        blockEntity.setInvStack(0, heldItem.split(1));
+        return ActionResult.SUCCESS;
+      }
+      return ActionResult.FAIL;
+    }
   }
 
   @Override
