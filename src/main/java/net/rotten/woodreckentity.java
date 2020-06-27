@@ -1,5 +1,6 @@
 package net.rotten;
 
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,28 +9,31 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.DefaultedList;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.Tickable;
 
-public class WoodReckEntity extends BlockEntity implements Tickable, Inventory {
+public class WoodReckEntity extends BlockEntity implements Tickable, Inventory, BlockEntityClientSerializable {
   public int dryingTime = 4800;
   private int processTime;
-  private final DefaultedList<ItemStack> items = DefaultedList.ofSize(1, ItemStack.EMPTY);
+  private DefaultedList<ItemStack> inventory;
 
   public WoodReckEntity() {
     super(Leather.WOOD_RECK_ENTITY);
+    this.inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
   }
 
   @Override
-  public void fromTag(CompoundTag tag) {
-    super.fromTag(tag);
-    Inventories.fromTag(tag, items);
+  public void fromTag(BlockState state, CompoundTag tag) {
+    super.fromTag(state, tag);
+    inventory.clear();
+    Inventories.fromTag(tag, inventory);
   }
 
   @Override
   public CompoundTag toTag(CompoundTag tag) {
-    Inventories.toTag(tag, items);
-    return super.toTag(tag);
+    super.toTag(tag);
+    Inventories.toTag(tag, inventory);
+    return tag;
   }
 
   @Override
@@ -38,11 +42,11 @@ public class WoodReckEntity extends BlockEntity implements Tickable, Inventory {
   }
 
   public void update() {
-    if (!isInvEmpty()) {
+    if (!isEmpty()) {
       ++processTime;
       if (processTime >= dryingTime) {
-        this.items.clear();
-        setInvStack(0, new ItemStack(Items.LEATHER));
+        this.clear();
+        setStack(0, new ItemStack(Items.LEATHER));
         processTime = 0;
       }
     }
@@ -63,27 +67,27 @@ public class WoodReckEntity extends BlockEntity implements Tickable, Inventory {
 
   @Override
   public void clear() {
-    this.items.clear();
+    this.inventory.clear();
   }
 
   @Override
-  public int getInvSize() {
+  public int size() {
     return 1;
   }
 
   @Override
-  public boolean isInvEmpty() {
-    return this.getInvStack(0).isEmpty();
+  public boolean isEmpty() {
+    return this.getStack(0).isEmpty();
   }
 
   @Override
-  public ItemStack getInvStack(int slot) {
-    return this.items.get(0);
+  public ItemStack getStack(int slot) {
+    return this.inventory.get(0);
   }
 
   @Override
-  public ItemStack takeInvStack(int slot, int amount) {
-    ItemStack result = Inventories.splitStack(this.items, slot, 1);
+  public ItemStack removeStack(int slot, int amount) {
+    ItemStack result = Inventories.splitStack(this.inventory, slot, 1);
     if (!result.isEmpty()) {
       markDirty();
     }
@@ -91,19 +95,32 @@ public class WoodReckEntity extends BlockEntity implements Tickable, Inventory {
   }
 
   @Override
-  public ItemStack removeInvStack(int slot) {
+  public ItemStack removeStack(int slot) {
     this.markDirty();
-    return Inventories.removeStack(this.items, slot);
+    return Inventories.removeStack(this.inventory, slot);
   }
 
   @Override
-  public void setInvStack(int slot, ItemStack stack) {
-    this.items.set(0, stack);
+  public void setStack(int slot, ItemStack stack) {
+    this.inventory.set(0, stack);
     this.markDirty();
   }
 
   @Override
-  public boolean canPlayerUseInv(PlayerEntity player) {
+  public boolean canPlayerUse(PlayerEntity player) {
     return true;
+  }
+
+  @Override
+  public void fromClientTag(CompoundTag tag) {
+    inventory.clear();
+    Inventories.fromTag(tag, inventory);
+  }
+
+  @Override
+  public CompoundTag toClientTag(CompoundTag tag) {
+    super.toTag(tag);
+    Inventories.toTag(tag, inventory);
+    return tag;
   }
 }

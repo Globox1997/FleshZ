@@ -22,12 +22,12 @@ public class WoodReckRenderer extends BlockEntityRenderer<WoodReckEntity> {
       VertexConsumerProvider vertexConsumers, int light, int overlay) {
     BlockState state = blockEntity.getWorld().getBlockState(blockEntity.getPos());
     Direction blockDirection = state.get(HorizontalFacingBlock.FACING);
-    if (!blockEntity.isInvEmpty()) {
+    if (!blockEntity.isEmpty()) {
       if (blockDirection == Direction.NORTH) {
         matrices.push();
         matrices.scale(1.8F, 1.8F, 1.8F);
         matrices.translate(0.28D, 0.12D, 0.5D);
-        MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getInvStack(0),
+        MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getStack(0),
             ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers);
         matrices.pop();
       } else {
@@ -35,7 +35,7 @@ public class WoodReckRenderer extends BlockEntityRenderer<WoodReckEntity> {
           matrices.push();
           matrices.scale(1.8F, 1.8F, 1.8F);
           matrices.translate(0.28D, 0.12D, 0.05D);
-          MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getInvStack(0),
+          MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getStack(0),
               ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers);
           matrices.pop();
         } else {
@@ -44,7 +44,7 @@ public class WoodReckRenderer extends BlockEntityRenderer<WoodReckEntity> {
             matrices.scale(1.8F, 1.8F, 1.8F);
             matrices.translate(0.05D, 0.12D, 0.28D);
             matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((90F)));
-            MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getInvStack(0),
+            MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getStack(0),
                 ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers);
             matrices.pop();
           } else {
@@ -53,7 +53,7 @@ public class WoodReckRenderer extends BlockEntityRenderer<WoodReckEntity> {
               matrices.scale(1.8F, 1.8F, 1.8F);
               matrices.translate(0.5D, 0.12D, 0.28D);
               matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion((90F)));
-              MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getInvStack(0),
+              MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getStack(0),
                   ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers);
               matrices.pop();
             }
