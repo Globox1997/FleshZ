@@ -1,4 +1,4 @@
-package net.rotten;
+package net.rotten.block.entity;
 
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.collection.DefaultedList;
+import net.rotten.FleshMain;
 import net.minecraft.util.Tickable;
 
 public class WoodReckEntity extends BlockEntity implements Tickable, Inventory, BlockEntityClientSerializable {
@@ -18,7 +19,7 @@ public class WoodReckEntity extends BlockEntity implements Tickable, Inventory, 
   private DefaultedList<ItemStack> inventory;
 
   public WoodReckEntity() {
-    super(Leather.WOOD_RECK_ENTITY);
+    super(FleshMain.WOOD_RACK_ENTITY);
     this.inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
   }
 
@@ -41,16 +42,23 @@ public class WoodReckEntity extends BlockEntity implements Tickable, Inventory, 
     this.update();
   }
 
-  public void update() {
-    if (!isEmpty()) {
+  private void update() {
+    if (!this.world.isClient && !isEmpty() && this.getStack(0).getItem().isIn(FleshMain.RACK_ITEMS)) {
       ++processTime;
       if (processTime >= dryingTime) {
-        this.clear();
-        setStack(0, new ItemStack(Items.LEATHER));
+        setStack(0, newStack(this.getStack(0)));
         processTime = 0;
       }
     }
   }
+
+  // @Override
+  // public void setStack(int slot, ItemStack stack) {
+  // super.setst
+  // System.out.println("WEIRD");
+  // this.inventory.set(0, );
+  // this.markDirty();
+  // }
 
   @Override
   public void markDirty() {
@@ -95,15 +103,16 @@ public class WoodReckEntity extends BlockEntity implements Tickable, Inventory, 
   }
 
   @Override
-  public ItemStack removeStack(int slot) {
+  public void setStack(int slot, ItemStack stack) {
+    this.clear();
+    this.inventory.set(0, stack);
     this.markDirty();
-    return Inventories.removeStack(this.inventory, slot);
   }
 
   @Override
-  public void setStack(int slot, ItemStack stack) {
-    this.inventory.set(0, stack);
+  public ItemStack removeStack(int slot) {
     this.markDirty();
+    return Inventories.removeStack(this.inventory, slot);
   }
 
   @Override
@@ -122,5 +131,12 @@ public class WoodReckEntity extends BlockEntity implements Tickable, Inventory, 
     super.toTag(tag);
     Inventories.toTag(tag, inventory);
     return tag;
+  }
+
+  private ItemStack newStack(ItemStack itemStack) {
+    if (itemStack.getItem() == FleshMain.ROTTEN_LEATHER) {
+      return new ItemStack(FleshMain.HIDE);
+    } else
+      return new ItemStack(Items.LEATHER);
   }
 }

@@ -1,7 +1,7 @@
 {
   "textures": {
     "particle": "block/oak_planks",
-      "woodreck": "rotten:block/woodreck"
+      "woodrack": "rotten:block/wood_rack"
   },
   "display": {
       "gui": {
@@ -41,12 +41,12 @@
           "from": [ 0, 13, 0 ], 
           "to": [ 16, 16, 3 ], 
           "faces": {
-              "north": { "texture": "#woodreck", "uv": [ 0, 1, 16, 4 ] },
-              "east": { "texture": "#woodreck", "uv": [ 2, 1, 5, 4 ] },
-              "south": { "texture": "#woodreck", "uv": [ 0, 1, 16, 4 ] },
-              "west": { "texture": "#woodreck", "uv": [ 12, 1, 15, 4 ] },
-              "up": { "texture": "#woodreck", "uv": [ 0, 0, 16, 3 ] },
-              "down": { "texture": "#woodreck", "uv": [ 0, 4, 16, 7 ] }
+              "north": { "texture": "#woodrack", "uv": [ 0, 1, 16, 4 ] },
+              "east": { "texture": "#woodrack", "uv": [ 2, 1, 5, 4 ] },
+              "south": { "texture": "#woodrack", "uv": [ 0, 1, 16, 4 ] },
+              "west": { "texture": "#woodrack", "uv": [ 12, 1, 15, 4 ] },
+              "up": { "texture": "#woodrack", "uv": [ 0, 0, 16, 3 ] },
+              "down": { "texture": "#woodrack", "uv": [ 0, 4, 16, 7 ] }
           }
       }
   ]

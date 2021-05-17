@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "rotten:woodreck"
+      "rotten:wood_rack"
     ]
   },
   "criteria": {

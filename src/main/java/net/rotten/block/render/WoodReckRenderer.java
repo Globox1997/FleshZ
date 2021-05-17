@@ -1,4 +1,4 @@
-package net.rotten;
+package net.rotten.block.render;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
@@ -9,6 +9,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.Direction;
+import net.rotten.block.entity.WoodReckEntity;
 import net.minecraft.client.render.model.json.ModelTransformation;
 
 public class WoodReckRenderer extends BlockEntityRenderer<WoodReckEntity> {

@@ -1,4 +1,4 @@
-package net.rotten;
+package net.rotten.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -29,9 +29,11 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+import net.rotten.FleshMain;
+import net.rotten.block.entity.WoodReckEntity;
 import net.minecraft.block.ShapeContext;
 
-public class WoodReck extends Block implements BlockEntityProvider {
+public class WoodRack extends Block implements BlockEntityProvider {
 
   public static final VoxelShape SHAPENORTH;
   public static final VoxelShape SHAPEWEST;
@@ -40,9 +42,14 @@ public class WoodReck extends Block implements BlockEntityProvider {
   public static final DirectionProperty FACING;
   public static final BooleanProperty WATERLOGGED;
 
-  public WoodReck(Settings settings) {
+  public WoodRack(Settings settings) {
     super(settings);
     this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH).with(WATERLOGGED, false));
+  }
+
+  @Override
+  public BlockEntity createBlockEntity(BlockView view) {
+    return new WoodReckEntity();
   }
 
   @Override
@@ -58,17 +65,14 @@ public class WoodReck extends Block implements BlockEntityProvider {
     } else {
       // Hang item on rack
       ItemStack heldItem = player.getMainHandStack();
-      if (!heldItem.isEmpty() && heldItem.isItemEqual(new ItemStack(Leather.FLESH))) {
-        blockEntity.setStack(0, heldItem.split(1));
+      if (!heldItem.isEmpty() && heldItem.getItem().isIn(FleshMain.RACK_ITEMS)) {
+        if (!world.isClient) {
+          blockEntity.setStack(0, heldItem.split(1));
+        }
         return ActionResult.SUCCESS;
       }
       return ActionResult.FAIL;
     }
-  }
-
-  @Override
-  public BlockEntity createBlockEntity(BlockView view) {
-    return new WoodReckEntity();
   }
 
   @Override
