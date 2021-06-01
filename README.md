@@ -20,5 +20,7 @@ Inside the file put for example this:
 }
 ```
 "item" represents the item you will hang on
+
 "result" will be the resulting item
+
 "time" is the time in ticks (1 second = 20 ticks)
