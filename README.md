@@ -19,8 +19,6 @@ Inside the file put for example this:
     "time": 4800
 }
 ```
-"item" represents the item you will hang on
-
-"result" will be the resulting item
-
+"item" represents the item you will hang on\
+"result" will be the resulting item\
 "time" is the time in ticks (1 second = 20 ticks)
