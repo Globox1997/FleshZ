@@ -29,8 +29,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import net.rotten.FleshMain;
-import net.rotten.block.entity.WoodReckEntity;
+import net.rotten.block.entity.WoodRackEntity;
+import net.rotten.recipe.RecipeInit;
 import net.minecraft.block.ShapeContext;
 
 public class WoodRack extends Block implements BlockEntityProvider {
@@ -49,25 +49,34 @@ public class WoodRack extends Block implements BlockEntityProvider {
 
   @Override
   public BlockEntity createBlockEntity(BlockView view) {
-    return new WoodReckEntity();
+    return new WoodRackEntity();
   }
 
   @Override
   public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
       BlockHitResult hit) {
-    Inventory blockEntity = (Inventory) world.getBlockEntity(pos);
-    ItemStack stack = blockEntity.getStack(0);
+    WoodRackEntity woodReckEntity = (WoodRackEntity) world.getBlockEntity(pos);
+    ItemStack stack = woodReckEntity.getStack(0);
     if (!stack.isEmpty()) {
       // Remove hanging item
-      player.giveItemStack(stack);
-      blockEntity.clear();
+      if (!world.isClient && !player.giveItemStack(stack.split(1))) {
+        player.dropItem(stack.split(1), false);
+      }
+      woodReckEntity.clear();
       return ActionResult.SUCCESS;
     } else {
       // Hang item on rack
       ItemStack heldItem = player.getMainHandStack();
-      if (!heldItem.isEmpty() && heldItem.getItem().isIn(FleshMain.RACK_ITEMS)) {
+      if (!heldItem.isEmpty() && RecipeInit.RACK_ITEM_LIST.contains(heldItem.getItem())) {
         if (!world.isClient) {
-          blockEntity.setStack(0, heldItem.split(1));
+          int index = RecipeInit.RACK_ITEM_LIST.indexOf(heldItem.getItem());
+          woodReckEntity.dryingTime = RecipeInit.RACK_RESULT_TIME_LIST.get(index);
+          woodReckEntity.result = RecipeInit.RACK_RESULT_ITEM_LIST.get(index);
+          woodReckEntity.index = index;
+          if (player.isCreative()) {
+            woodReckEntity.setStack(0, heldItem.copy());
+          } else
+            woodReckEntity.setStack(0, heldItem.split(1));
         }
         return ActionResult.SUCCESS;
       }
