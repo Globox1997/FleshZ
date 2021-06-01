@@ -6,19 +6,22 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.collection.DefaultedList;
 import net.rotten.FleshMain;
+import net.rotten.recipe.RecipeInit;
 import net.minecraft.util.Tickable;
 
-public class WoodReckEntity extends BlockEntity implements Tickable, Inventory, BlockEntityClientSerializable {
-  public int dryingTime = 4800;
+public class WoodRackEntity extends BlockEntity implements Tickable, Inventory, BlockEntityClientSerializable {
+  public Item result;
+  public int index;
+  public int dryingTime;
   private int processTime;
   private DefaultedList<ItemStack> inventory;
 
-  public WoodReckEntity() {
+  public WoodRackEntity() {
     super(FleshMain.WOOD_RACK_ENTITY);
     this.inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
   }
@@ -26,6 +29,9 @@ public class WoodReckEntity extends BlockEntity implements Tickable, Inventory, 
   @Override
   public void fromTag(BlockState state, CompoundTag tag) {
     super.fromTag(state, tag);
+    dryingTime = tag.getInt("Drying_Time");
+    index = tag.getInt("Rack_Index");
+    result = RecipeInit.RACK_RESULT_ITEM_LIST.get(index);
     inventory.clear();
     Inventories.fromTag(tag, inventory);
   }
@@ -33,6 +39,8 @@ public class WoodReckEntity extends BlockEntity implements Tickable, Inventory, 
   @Override
   public CompoundTag toTag(CompoundTag tag) {
     super.toTag(tag);
+    tag.putInt("Drying_Time", dryingTime);
+    tag.putInt("Rack_Index", index);
     Inventories.toTag(tag, inventory);
     return tag;
   }
@@ -43,22 +51,14 @@ public class WoodReckEntity extends BlockEntity implements Tickable, Inventory, 
   }
 
   private void update() {
-    if (!this.world.isClient && !isEmpty() && this.getStack(0).getItem().isIn(FleshMain.RACK_ITEMS)) {
+    if (!this.world.isClient && !isEmpty() && RecipeInit.RACK_ITEM_LIST.contains(this.getStack(0).getItem())) {
       ++processTime;
       if (processTime >= dryingTime) {
-        setStack(0, newStack(this.getStack(0)));
+        this.setStack(0, new ItemStack(result));
         processTime = 0;
       }
     }
   }
-
-  // @Override
-  // public void setStack(int slot, ItemStack stack) {
-  // super.setst
-  // System.out.println("WEIRD");
-  // this.inventory.set(0, );
-  // this.markDirty();
-  // }
 
   @Override
   public void markDirty() {
@@ -133,10 +133,4 @@ public class WoodReckEntity extends BlockEntity implements Tickable, Inventory, 
     return tag;
   }
 
-  private ItemStack newStack(ItemStack itemStack) {
-    if (itemStack.getItem() == FleshMain.ROTTEN_LEATHER) {
-      return new ItemStack(FleshMain.HIDE);
-    } else
-      return new ItemStack(Items.LEATHER);
-  }
 }

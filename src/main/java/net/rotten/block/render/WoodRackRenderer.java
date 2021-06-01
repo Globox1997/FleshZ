@@ -9,17 +9,17 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.math.Direction;
-import net.rotten.block.entity.WoodReckEntity;
+import net.rotten.block.entity.WoodRackEntity;
 import net.minecraft.client.render.model.json.ModelTransformation;
 
-public class WoodReckRenderer extends BlockEntityRenderer<WoodReckEntity> {
+public class WoodRackRenderer extends BlockEntityRenderer<WoodRackEntity> {
 
-  public WoodReckRenderer(BlockEntityRenderDispatcher dispatcher) {
+  public WoodRackRenderer(BlockEntityRenderDispatcher dispatcher) {
     super(dispatcher);
   }
 
   @Override
-  public void render(WoodReckEntity blockEntity, float tickDelta, MatrixStack matrices,
+  public void render(WoodRackEntity blockEntity, float tickDelta, MatrixStack matrices,
       VertexConsumerProvider vertexConsumers, int light, int overlay) {
     BlockState state = blockEntity.getWorld().getBlockState(blockEntity.getPos());
     Direction blockDirection = state.get(HorizontalFacingBlock.FACING);
