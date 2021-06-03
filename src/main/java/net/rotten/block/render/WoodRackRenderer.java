@@ -1,6 +1,5 @@
 package net.rotten.block.render;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -21,9 +20,9 @@ public class WoodRackRenderer extends BlockEntityRenderer<WoodRackEntity> {
   @Override
   public void render(WoodRackEntity blockEntity, float tickDelta, MatrixStack matrices,
       VertexConsumerProvider vertexConsumers, int light, int overlay) {
-    BlockState state = blockEntity.getWorld().getBlockState(blockEntity.getPos());
-    Direction blockDirection = state.get(HorizontalFacingBlock.FACING);
     if (!blockEntity.isEmpty()) {
+      Direction blockDirection = blockEntity.getWorld().getBlockState(blockEntity.getPos())
+          .get(HorizontalFacingBlock.FACING);
       if (blockDirection == Direction.NORTH) {
         matrices.push();
         matrices.scale(1.8F, 1.8F, 1.8F);
