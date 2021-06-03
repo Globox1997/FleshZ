@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "rotten",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "name": "FleshZ",
-  "description": "Probably another rottenflesh to leather mod",
+  "description": "Changes the game mechanic of how to obtain leather",
   "authors": [
     "Globox_Z"
   ],
@@ -11,7 +11,7 @@
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/fleshz",
     "sources": "https://github.com/Globox1997/FleshZ"
   },
-  "license": "MIT License",
+  "license": "MIT",
   "icon": "assets/rotten/icon.png",
   "environment": "*",
   "entrypoints": {
