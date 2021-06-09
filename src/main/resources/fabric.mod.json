@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "rotten",
-  "version": "1.4.1",
+  "version": "${version}",
   "name": "FleshZ",
   "description": "Changes the game mechanic of how to obtain leather",
   "authors": [
@@ -26,7 +26,7 @@
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
-    "minecraft": "1.16.x"
+    "minecraft": "1.17.x"
   },
   "suggests": {
     "flamingo": "*"

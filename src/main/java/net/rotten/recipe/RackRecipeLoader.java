@@ -24,7 +24,7 @@ public class RackRecipeLoader implements SimpleSynchronousResourceReloadListener
     }
 
     @Override
-    public void apply(ResourceManager manager) {
+    public void reload(ResourceManager manager) {
         for (Identifier id : manager.findResources("rack_items", path -> path.endsWith(".json"))) {
             try {
                 InputStream stream = manager.getResource(id).getInputStream();

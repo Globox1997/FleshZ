@@ -6,6 +6,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -29,9 +31,11 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+import net.rotten.FleshMain;
 import net.rotten.block.entity.WoodRackEntity;
 import net.rotten.recipe.RecipeInit;
 import net.minecraft.block.ShapeContext;
+import org.jetbrains.annotations.Nullable;
 
 public class WoodRack extends Block implements BlockEntityProvider {
 
@@ -48,8 +52,14 @@ public class WoodRack extends Block implements BlockEntityProvider {
   }
 
   @Override
-  public BlockEntity createBlockEntity(BlockView view) {
-    return new WoodRackEntity();
+  public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    return new WoodRackEntity(pos, state);
+  }
+
+  @Nullable
+  @Override
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+    return checkType(type, FleshMain.WOOD_RACK_ENTITY, world.isClient ? WoodRackEntity::clientTick : WoodRackEntity::serverTick);
   }
 
   @Override
@@ -186,6 +196,10 @@ public class WoodRack extends Block implements BlockEntityProvider {
 
       super.onStateReplaced(state, world, pos, newState, moved);
     }
+  }
+
+  protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> checkType(BlockEntityType<A> givenType, BlockEntityType<E> expectedType, BlockEntityTicker<? super E> ticker) {
+    return expectedType == givenType ? (BlockEntityTicker<A>) ticker : null;
   }
 
   static {

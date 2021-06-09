@@ -2,6 +2,7 @@ package net.rotten;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
@@ -20,7 +21,7 @@ public class FleshMain implements ModInitializer {
     public static final Item PREPARED_HIDE = new Item(new Item.Settings().group(ItemGroup.MISC));
 
     public static final WoodRack WOOD_RACK = new WoodRack(FabricBlockSettings.copy(Blocks.OAK_PLANKS));
-    public static final BlockEntityType<WoodRackEntity> WOOD_RACK_ENTITY = BlockEntityType.Builder
+    public static final BlockEntityType<WoodRackEntity> WOOD_RACK_ENTITY = FabricBlockEntityTypeBuilder
             .create(WoodRackEntity::new, WOOD_RACK).build(null);;
 
     @Override

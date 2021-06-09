@@ -8,46 +8,50 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.rotten.FleshMain;
 import net.rotten.recipe.RecipeInit;
-import net.minecraft.util.Tickable;
 
-public class WoodRackEntity extends BlockEntity implements Tickable, Inventory, BlockEntityClientSerializable {
+public class WoodRackEntity extends BlockEntity implements Inventory, BlockEntityClientSerializable {
   public Item result;
   public int index;
   public int dryingTime;
   private int processTime;
   private DefaultedList<ItemStack> inventory;
 
-  public WoodRackEntity() {
-    super(FleshMain.WOOD_RACK_ENTITY);
+  public WoodRackEntity(BlockPos pos, BlockState state) {
+    super(FleshMain.WOOD_RACK_ENTITY, pos, state);
     this.inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
   }
 
   @Override
-  public void fromTag(BlockState state, CompoundTag tag) {
-    super.fromTag(state, tag);
-    dryingTime = tag.getInt("Drying_Time");
-    index = tag.getInt("Rack_Index");
+  public void readNbt(NbtCompound nbt) {
+    super.readNbt(nbt);
+    dryingTime = nbt.getInt("Drying_Time");
+    index = nbt.getInt("Rack_Index");
     result = RecipeInit.RACK_RESULT_ITEM_LIST.get(index);
     inventory.clear();
-    Inventories.fromTag(tag, inventory);
+    Inventories.readNbt(nbt, inventory);
   }
 
   @Override
-  public CompoundTag toTag(CompoundTag tag) {
-    super.toTag(tag);
-    tag.putInt("Drying_Time", dryingTime);
-    tag.putInt("Rack_Index", index);
-    Inventories.toTag(tag, inventory);
-    return tag;
+  public NbtCompound writeNbt(NbtCompound nbt) {
+    super.writeNbt(nbt);
+    nbt.putInt("Drying_Time", dryingTime);
+    nbt.putInt("Rack_Index", index);
+    Inventories.writeNbt(nbt, inventory);
+    return nbt;
   }
 
-  @Override
-  public void tick() {
-    this.update();
+  public static void clientTick(World world, BlockPos pos, BlockState state, WoodRackEntity blockEntity) {
+    blockEntity.update();
+  }
+
+  public static void serverTick(World world, BlockPos pos, BlockState state, WoodRackEntity blockEntity) {
+    blockEntity.update();
   }
 
   private void update() {
@@ -121,15 +125,14 @@ public class WoodRackEntity extends BlockEntity implements Tickable, Inventory, 
   }
 
   @Override
-  public void fromClientTag(CompoundTag tag) {
+  public void fromClientTag(NbtCompound tag) {
     inventory.clear();
-    Inventories.fromTag(tag, inventory);
+    Inventories.readNbt(tag, inventory);
   }
 
   @Override
-  public CompoundTag toClientTag(CompoundTag tag) {
-    super.toTag(tag);
-    Inventories.toTag(tag, inventory);
+  public NbtCompound toClientTag(NbtCompound tag) {
+    Inventories.writeNbt(tag, inventory);
     return tag;
   }
 
