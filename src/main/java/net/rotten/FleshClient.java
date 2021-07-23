@@ -8,10 +8,10 @@ import net.rotten.block.render.WoodRackRenderer;
 
 public class FleshClient implements ClientModInitializer {
 
-  @Override
-  public void onInitializeClient() {
-    BlockRenderLayerMap.INSTANCE.putBlock(FleshMain.WOOD_RACK, RenderLayer.getCutout());
-    BlockEntityRendererRegistry.INSTANCE.register(FleshMain.WOOD_RACK_ENTITY, WoodRackRenderer::new);
-  }
+    @Override
+    public void onInitializeClient() {
+        BlockRenderLayerMap.INSTANCE.putBlock(FleshMain.WOOD_RACK, RenderLayer.getCutout());
+        BlockEntityRendererRegistry.INSTANCE.register(FleshMain.WOOD_RACK_ENTITY, WoodRackRenderer::new);
+    }
 
 }

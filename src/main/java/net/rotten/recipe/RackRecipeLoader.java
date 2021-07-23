@@ -30,8 +30,7 @@ public class RackRecipeLoader implements SimpleSynchronousResourceReloadListener
                 InputStream stream = manager.getResource(id).getInputStream();
                 JsonObject data = new JsonParser().parse(new InputStreamReader(stream)).getAsJsonObject();
                 RecipeInit.RACK_ITEM_LIST.add((Item) Registry.ITEM.get(new Identifier(data.get("item").getAsString())));
-                RecipeInit.RACK_RESULT_ITEM_LIST
-                        .add((Item) Registry.ITEM.get(new Identifier(data.get("result").getAsString())));
+                RecipeInit.RACK_RESULT_ITEM_LIST.add((Item) Registry.ITEM.get(new Identifier(data.get("result").getAsString())));
                 RecipeInit.RACK_RESULT_TIME_LIST.add(data.get("time").getAsInt());
 
             } catch (Exception e) {

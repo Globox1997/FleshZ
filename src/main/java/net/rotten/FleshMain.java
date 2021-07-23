@@ -21,8 +21,7 @@ public class FleshMain implements ModInitializer {
     public static final Item PREPARED_HIDE = new Item(new Item.Settings().group(ItemGroup.MISC));
 
     public static final WoodRack WOOD_RACK = new WoodRack(FabricBlockSettings.copy(Blocks.OAK_PLANKS));
-    public static final BlockEntityType<WoodRackEntity> WOOD_RACK_ENTITY = FabricBlockEntityTypeBuilder
-            .create(WoodRackEntity::new, WOOD_RACK).build(null);;
+    public static final BlockEntityType<WoodRackEntity> WOOD_RACK_ENTITY = FabricBlockEntityTypeBuilder.create(WoodRackEntity::new, WOOD_RACK).build(null);;
 
     @Override
     public void onInitialize() {
@@ -30,8 +29,7 @@ public class FleshMain implements ModInitializer {
         Registry.register(Registry.ITEM, new Identifier("rotten", "rotten_leather"), ROTTEN_LEATHER);
         Registry.register(Registry.ITEM, new Identifier("rotten", "hide"), HIDE);
         Registry.register(Registry.ITEM, new Identifier("rotten", "prepared_hide"), PREPARED_HIDE);
-        Registry.register(Registry.ITEM, new Identifier("rotten", "wood_rack"),
-                new BlockItem(WOOD_RACK, new Item.Settings().group(ItemGroup.DECORATIONS)));
+        Registry.register(Registry.ITEM, new Identifier("rotten", "wood_rack"), new BlockItem(WOOD_RACK, new Item.Settings().group(ItemGroup.DECORATIONS)));
         Registry.register(Registry.BLOCK, new Identifier("rotten", "wood_rack"), WOOD_RACK);
         Registry.register(Registry.BLOCK_ENTITY_TYPE, "rotten:wood_rack_entity", WOOD_RACK_ENTITY);
         RecipeInit.init();
