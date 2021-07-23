@@ -59,21 +59,14 @@ public class WoodRack extends Block implements BlockEntityProvider {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, FleshMain.WOOD_RACK_ENTITY, world.isClient ? WoodRackEntity::clientTick : WoodRackEntity::serverTick);
+        return checkType(type, FleshMain.WOOD_RACK_ENTITY, world.isClient ? null : WoodRackEntity::serverTick);
     }
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         WoodRackEntity woodReckEntity = (WoodRackEntity) world.getBlockEntity(pos);
         ItemStack stack = woodReckEntity.getStack(0);
-        if (!stack.isEmpty()) {
-            // Remove hanging item
-            if (!world.isClient && !player.giveItemStack(stack.split(1))) {
-                player.dropItem(stack.split(1), false);
-            }
-            woodReckEntity.clear();
-            return ActionResult.SUCCESS;
-        } else {
+        if (stack.isEmpty()) {
             // Hang item on rack
             ItemStack heldItem = player.getMainHandStack();
             if (!heldItem.isEmpty() && RecipeInit.RACK_ITEM_LIST.contains(heldItem.getItem())) {
@@ -87,9 +80,16 @@ public class WoodRack extends Block implements BlockEntityProvider {
                     } else
                         woodReckEntity.setStack(0, heldItem.split(1));
                 }
-                return ActionResult.SUCCESS;
+                return ActionResult.success(world.isClient);
             }
-            return ActionResult.FAIL;
+            return ActionResult.CONSUME;
+        } else {
+            // Remove hanging item
+            if (!world.isClient && !player.giveItemStack(stack.split(1))) {
+                player.dropItem(stack.split(1), false);
+            }
+            woodReckEntity.clear();
+            return ActionResult.success(world.isClient);
         }
     }
 
