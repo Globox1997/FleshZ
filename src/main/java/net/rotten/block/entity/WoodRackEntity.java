@@ -46,10 +46,6 @@ public class WoodRackEntity extends BlockEntity implements Inventory, BlockEntit
         return nbt;
     }
 
-    public static void clientTick(World world, BlockPos pos, BlockState state, WoodRackEntity blockEntity) {
-        blockEntity.update();
-    }
-
     public static void serverTick(World world, BlockPos pos, BlockState state, WoodRackEntity blockEntity) {
         blockEntity.update();
     }
