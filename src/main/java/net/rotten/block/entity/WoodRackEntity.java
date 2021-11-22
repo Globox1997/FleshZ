@@ -1,6 +1,5 @@
 package net.rotten.block.entity;
 
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,13 +8,14 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.rotten.FleshMain;
 import net.rotten.recipe.RecipeInit;
 
-public class WoodRackEntity extends BlockEntity implements Inventory, BlockEntityClientSerializable {
+public class WoodRackEntity extends BlockEntity implements Inventory {
     public Item result;
     public int index;
     public int dryingTime;
@@ -30,20 +30,21 @@ public class WoodRackEntity extends BlockEntity implements Inventory, BlockEntit
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        dryingTime = nbt.getInt("Drying_Time");
-        index = nbt.getInt("Rack_Index");
-        result = RecipeInit.RACK_RESULT_ITEM_LIST.get(index);
-        inventory.clear();
+
+        this.dryingTime = nbt.getInt("Drying_Time");
+        this.index = nbt.getInt("Rack_Index");
+        if (!this.world.isClient)
+            this.result = RecipeInit.RACK_RESULT_ITEM_LIST.get(index);
+        this.inventory.clear();
         Inventories.readNbt(nbt, inventory);
     }
 
     @Override
-    public NbtCompound writeNbt(NbtCompound nbt) {
+    public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         nbt.putInt("Drying_Time", dryingTime);
         nbt.putInt("Rack_Index", index);
         Inventories.writeNbt(nbt, inventory);
-        return nbt;
     }
 
     public static void serverTick(World world, BlockPos pos, BlockState state, WoodRackEntity blockEntity) {
@@ -121,15 +122,13 @@ public class WoodRackEntity extends BlockEntity implements Inventory, BlockEntit
     }
 
     @Override
-    public void fromClientTag(NbtCompound tag) {
-        inventory.clear();
-        Inventories.readNbt(tag, inventory);
+    public BlockEntityUpdateS2CPacket toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
     }
 
     @Override
-    public NbtCompound toClientTag(NbtCompound tag) {
-        Inventories.writeNbt(tag, inventory);
-        return tag;
+    public NbtCompound toInitialChunkDataNbt() {
+        return this.createNbt();
     }
 
 }
