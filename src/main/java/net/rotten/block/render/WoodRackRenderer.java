@@ -1,5 +1,7 @@
 package net.rotten.block.render;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -11,6 +13,7 @@ import net.minecraft.util.math.Direction;
 import net.rotten.block.entity.WoodRackEntity;
 import net.minecraft.client.render.model.json.ModelTransformation;
 
+@Environment(EnvType.CLIENT)
 public class WoodRackRenderer implements BlockEntityRenderer<WoodRackEntity> {
 
     public WoodRackRenderer(BlockEntityRendererFactory.Context ctx) {

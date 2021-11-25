@@ -33,7 +33,7 @@ public class WoodRackEntity extends BlockEntity implements Inventory {
 
         this.dryingTime = nbt.getInt("Drying_Time");
         this.index = nbt.getInt("Rack_Index");
-        if (!this.world.isClient)
+        if (this.world != null && !this.world.isClient)
             this.result = RecipeInit.RACK_RESULT_ITEM_LIST.get(index);
         this.inventory.clear();
         Inventories.readNbt(nbt, inventory);
