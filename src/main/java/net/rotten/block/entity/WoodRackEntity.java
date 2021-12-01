@@ -20,23 +20,21 @@ public class WoodRackEntity extends BlockEntity implements Inventory {
     public int index;
     public int dryingTime;
     private int processTime;
-    private DefaultedList<ItemStack> inventory;
+    private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
 
     public WoodRackEntity(BlockPos pos, BlockState state) {
         super(FleshMain.WOOD_RACK_ENTITY, pos, state);
-        this.inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-
         this.dryingTime = nbt.getInt("Drying_Time");
         this.index = nbt.getInt("Rack_Index");
-        if (this.world != null && !this.world.isClient)
-            this.result = RecipeInit.RACK_RESULT_ITEM_LIST.get(index);
         this.inventory.clear();
         Inventories.readNbt(nbt, inventory);
+        if (this.world != null && !this.world.isClient && !isEmpty())
+            this.result = RecipeInit.RACK_RESULT_ITEM_LIST.get(index);
     }
 
     @Override
@@ -77,6 +75,7 @@ public class WoodRackEntity extends BlockEntity implements Inventory {
     @Override
     public void clear() {
         this.inventory.clear();
+        this.markDirty();
     }
 
     @Override

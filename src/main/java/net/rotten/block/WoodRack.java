@@ -75,9 +75,9 @@ public class WoodRack extends Block implements BlockEntityProvider {
                     woodReckEntity.dryingTime = RecipeInit.RACK_RESULT_TIME_LIST.get(index);
                     woodReckEntity.result = RecipeInit.RACK_RESULT_ITEM_LIST.get(index);
                     woodReckEntity.index = index;
-                    if (player.isCreative()) {
+                    if (player.isCreative())
                         woodReckEntity.setStack(0, heldItem.copy());
-                    } else
+                    else
                         woodReckEntity.setStack(0, heldItem.split(1));
                 }
                 return ActionResult.success(world.isClient);
@@ -85,9 +85,9 @@ public class WoodRack extends Block implements BlockEntityProvider {
             return ActionResult.CONSUME;
         } else {
             // Remove hanging item
-            if (!world.isClient && !player.giveItemStack(stack.split(1))) {
+            if (!world.isClient && !player.giveItemStack(stack.split(1)))
                 player.dropItem(stack.split(1), false);
-            }
+
             woodReckEntity.clear();
             return ActionResult.success(world.isClient);
         }
