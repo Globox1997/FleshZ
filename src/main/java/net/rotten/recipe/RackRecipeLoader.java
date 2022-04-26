@@ -29,6 +29,20 @@ public class RackRecipeLoader implements SimpleSynchronousResourceReloadListener
             try {
                 InputStream stream = manager.getResource(id).getInputStream();
                 JsonObject data = JsonParser.parseReader(new InputStreamReader(stream)).getAsJsonObject();
+
+                if (Registry.ITEM.get(new Identifier(data.get("item").getAsString())).toString().equals("air")) {
+                    LOGGER.info("{} is not a valid item identifier at resouce {}", data.get("item").getAsString(), id.toString());
+                    continue;
+                }
+                if (Registry.ITEM.get(new Identifier(data.get("result").getAsString())).toString().equals("air")) {
+                    LOGGER.info("{} is not a valid item identifier at resouce {}", data.get("result").getAsString(), id.toString());
+                    continue;
+                }
+                if (data.get("time").getAsInt() < 0) {
+                    LOGGER.info("{} is not a valid time at resouce {}", data.get("time").getAsInt(), id.toString());
+                    continue;
+                }
+
                 RecipeInit.RACK_ITEM_LIST.add((Item) Registry.ITEM.get(new Identifier(data.get("item").getAsString())));
                 RecipeInit.RACK_RESULT_ITEM_LIST.add((Item) Registry.ITEM.get(new Identifier(data.get("result").getAsString())));
                 RecipeInit.RACK_RESULT_TIME_LIST.add(data.get("time").getAsInt());
