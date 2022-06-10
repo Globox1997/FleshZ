@@ -1,5 +1,7 @@
 package net.rotten.block.entity;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,6 +18,7 @@ import net.rotten.FleshMain;
 import net.rotten.recipe.RecipeInit;
 
 public class WoodRackEntity extends BlockEntity implements Inventory {
+    @Nullable
     public Item result;
     public int index;
     public int dryingTime;
@@ -33,7 +36,7 @@ public class WoodRackEntity extends BlockEntity implements Inventory {
         this.index = nbt.getInt("Rack_Index");
         this.inventory.clear();
         Inventories.readNbt(nbt, inventory);
-        if (this.world != null && !this.world.isClient && !isEmpty())
+        if (!isEmpty() && !RecipeInit.RACK_RESULT_ITEM_LIST.isEmpty() && RecipeInit.RACK_RESULT_ITEM_LIST.size() > index)
             this.result = RecipeInit.RACK_RESULT_ITEM_LIST.get(index);
     }
 
@@ -51,10 +54,10 @@ public class WoodRackEntity extends BlockEntity implements Inventory {
 
     private void update() {
         if (!this.world.isClient && !isEmpty() && RecipeInit.RACK_ITEM_LIST.contains(this.getStack(0).getItem())) {
-            ++processTime;
-            if (processTime >= dryingTime) {
+            ++this.processTime;
+            if (this.processTime >= this.dryingTime) {
                 this.setStack(0, new ItemStack(result));
-                processTime = 0;
+                this.processTime = 0;
             }
         }
     }
