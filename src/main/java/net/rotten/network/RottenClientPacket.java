@@ -5,7 +5,7 @@ import java.util.List;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
 import net.rotten.recipe.RecipeInit;
 
 public class RottenClientPacket {
@@ -24,12 +24,12 @@ public class RottenClientPacket {
 
                 List<Integer> list = newBuffer.readIntList();
                 for (int i = 0; i < list.size(); i++)
-                    RecipeInit.RACK_ITEM_LIST.add(Registry.ITEM.get(list.get(i)));
+                    RecipeInit.RACK_ITEM_LIST.add(Registries.ITEM.get(list.get(i)));
                 list.clear();
 
                 list = newBuffer.readIntList();
                 for (int i = 0; i < list.size(); i++)
-                    RecipeInit.RACK_RESULT_ITEM_LIST.add(Registry.ITEM.get(list.get(i)));
+                    RecipeInit.RACK_RESULT_ITEM_LIST.add(Registries.ITEM.get(list.get(i)));
                 list.clear();
 
                 RecipeInit.RACK_RESULT_TIME_LIST.addAll(newBuffer.readIntList());

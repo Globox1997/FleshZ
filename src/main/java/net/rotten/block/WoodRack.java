@@ -127,7 +127,7 @@ public class WoodRack extends Block implements BlockEntityProvider {
             return Blocks.AIR.getDefaultState();
         } else {
             if ((Boolean) state.get(WATERLOGGED)) {
-                world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+                world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
             }
 
             return super.getStateForNeighborUpdate(state, direction, newState, world, pos, posFrom);

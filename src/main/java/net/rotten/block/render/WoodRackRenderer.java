@@ -9,8 +9,8 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.RotationAxis;
 import net.rotten.block.entity.WoodRackEntity;
 import net.minecraft.client.render.model.json.ModelTransformation;
 
@@ -36,11 +36,11 @@ public class WoodRackRenderer implements BlockEntityRenderer<WoodRackEntity> {
                 } else if (blockDirection == Direction.EAST) {
                     matrices.scale(1.8F, 1.8F, 1.8F);
                     matrices.translate(0.05D, 0.12D, 0.28D);
-                    matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((90F)));
+                    matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((90F)));
                 } else if (blockDirection == Direction.WEST) {
                     matrices.scale(1.8F, 1.8F, 1.8F);
                     matrices.translate(0.5D, 0.12D, 0.28D);
-                    matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion((90F)));
+                    matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((90F)));
                 }
                 MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getStack(0), ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers,
                         (int) blockEntity.getPos().asLong());

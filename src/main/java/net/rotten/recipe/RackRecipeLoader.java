@@ -11,9 +11,9 @@ import com.google.gson.JsonParser;
 
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class RackRecipeLoader implements SimpleSynchronousResourceReloadListener {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -30,11 +30,11 @@ public class RackRecipeLoader implements SimpleSynchronousResourceReloadListener
                 InputStream stream = resourceRef.getInputStream();
                 JsonObject data = JsonParser.parseReader(new InputStreamReader(stream)).getAsJsonObject();
 
-                if (Registry.ITEM.get(new Identifier(data.get("item").getAsString())).toString().equals("air")) {
+                if (Registries.ITEM.get(new Identifier(data.get("item").getAsString())).toString().equals("air")) {
                     LOGGER.info("{} is not a valid item identifier at resouce {}", data.get("item").getAsString(), id.toString());
                     return;
                 }
-                if (Registry.ITEM.get(new Identifier(data.get("result").getAsString())).toString().equals("air")) {
+                if (Registries.ITEM.get(new Identifier(data.get("result").getAsString())).toString().equals("air")) {
                     LOGGER.info("{} is not a valid item identifier at resouce {}", data.get("result").getAsString(), id.toString());
                     return;
                 }
@@ -43,8 +43,8 @@ public class RackRecipeLoader implements SimpleSynchronousResourceReloadListener
                     return;
                 }
 
-                RecipeInit.RACK_ITEM_LIST.add((Item) Registry.ITEM.get(new Identifier(data.get("item").getAsString())));
-                RecipeInit.RACK_RESULT_ITEM_LIST.add((Item) Registry.ITEM.get(new Identifier(data.get("result").getAsString())));
+                RecipeInit.RACK_ITEM_LIST.add((Item) Registries.ITEM.get(new Identifier(data.get("item").getAsString())));
+                RecipeInit.RACK_RESULT_ITEM_LIST.add((Item) Registries.ITEM.get(new Identifier(data.get("result").getAsString())));
                 RecipeInit.RACK_RESULT_TIME_LIST.add(data.get("time").getAsInt());
 
             } catch (Exception e) {

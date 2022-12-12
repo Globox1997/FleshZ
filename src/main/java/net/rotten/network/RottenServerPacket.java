@@ -7,9 +7,9 @@ import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.rotten.recipe.RecipeInit;
 
 public class RottenServerPacket {
@@ -20,11 +20,11 @@ public class RottenServerPacket {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         List<Integer> list = new ArrayList<Integer>();
         for (int i = 0; i < RecipeInit.RACK_ITEM_LIST.size(); i++)
-            list.add(Registry.ITEM.getRawId(RecipeInit.RACK_ITEM_LIST.get(i)));
+            list.add(Registries.ITEM.getRawId(RecipeInit.RACK_ITEM_LIST.get(i)));
         buf.writeIntList(new IntArrayList(list));
         list.clear();
         for (int u = 0; u < RecipeInit.RACK_RESULT_ITEM_LIST.size(); u++)
-            list.add(Registry.ITEM.getRawId(RecipeInit.RACK_RESULT_ITEM_LIST.get(u)));
+            list.add(Registries.ITEM.getRawId(RecipeInit.RACK_RESULT_ITEM_LIST.get(u)));
         buf.writeIntList(new IntArrayList(list));
         list.clear();
         for (int k = 0; k < RecipeInit.RACK_RESULT_ITEM_LIST.size(); k++)
