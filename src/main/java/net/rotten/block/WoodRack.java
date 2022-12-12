@@ -37,6 +37,7 @@ import net.rotten.recipe.RecipeInit;
 import net.minecraft.block.ShapeContext;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class WoodRack extends Block implements BlockEntityProvider {
 
     public static final VoxelShape SHAPENORTH;
