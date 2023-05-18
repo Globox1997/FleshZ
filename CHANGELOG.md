@@ -1,5 +1,5 @@
 ### Added:
--
+- Added emi rack category
 ### Fixed:
 - 
 ### Changed:

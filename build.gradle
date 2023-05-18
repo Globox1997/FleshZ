@@ -1,20 +1,29 @@
 plugins {
-	id 'fabric-loom' version '1.1-SNAPSHOT'
+	id 'fabric-loom' version '1.2-SNAPSHOT'
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
+
+repositories {
+	maven { url = "https://api.modrinth.com/maven" }
+}
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	// EMI
+	modCompileOnly ('maven.modrinth:emi:0.7.3+1.19.4'){
+		exclude(group: "net.fabricmc.fabric-api")
+	}
+}
+
+base {
+	archivesName = project.archives_base_name
 }
 
 processResources {
@@ -31,11 +40,14 @@ tasks.withType(JavaCompile).configureEach {
 
 java {
 	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
 }
 
 jar {
 	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}" }
+		rename { "${it}_${base.archivesName.get()}"}
 	}
 }
 

@@ -20,6 +20,9 @@
     ],
     "client": [
       "net.fleshz.FleshClient"
+    ],
+    "emi": [
+      "net.fleshz.compat.FleshEmiPlugin"
     ]
   },
   "mixins": [

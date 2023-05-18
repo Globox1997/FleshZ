@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.resource.ResourceType;
 
 public class RecipeInit {
+
     public static final List<Item> RACK_ITEM_LIST = new ArrayList<>();
     public static final List<Item> RACK_RESULT_ITEM_LIST = new ArrayList<>();
     public static final List<Integer> RACK_RESULT_TIME_LIST = new ArrayList<>();
