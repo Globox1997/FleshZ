@@ -1,0 +1,22 @@
+{
+    "parent": "minecraft:recipes/root",
+    "rewards": {
+        "recipes": [
+            "fleshz:prepared_hide"
+        ]
+    },
+    "criteria": {
+        "got_fleshz": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "fleshz:hide"
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "rotten",
+  "id": "fleshz",
   "version": "${version}",
   "name": "FleshZ",
   "description": "Changes the game mechanic of how to obtain leather",
@@ -12,18 +12,18 @@
     "sources": "https://github.com/Globox1997/FleshZ"
   },
   "license": "MIT",
-  "icon": "assets/rotten/icon.png",
+  "icon": "assets/fleshz/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.rotten.FleshMain"
+      "net.fleshz.FleshMain"
     ],
     "client": [
-      "net.rotten.FleshClient"
+      "net.fleshz.FleshClient"
     ]
   },
   "mixins": [
-    "rotten.mixins.json"
+    "fleshz.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.14.6",

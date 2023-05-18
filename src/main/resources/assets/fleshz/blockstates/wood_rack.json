@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=south": {
+      "model": "fleshz:block/wood_rack"
+    },
+    "facing=west": {
+      "model": "fleshz:block/wood_rack",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "fleshz:block/wood_rack",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "fleshz:block/wood_rack",
+      "y": 270
+    }
+  }
+}
