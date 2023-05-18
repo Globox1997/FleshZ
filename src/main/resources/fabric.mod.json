@@ -26,12 +26,18 @@
     "fleshz.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.14.6",
-    "fabric": "*",
-    "minecraft": "1.19.x",
-    "java": ">=17"
+    "java": ">=17",
+    "minecraft": "${minecraft_version}",
+    "fabric-api": ">=${fabric_version}",
+    "fabricloader": ">=${loader_version}"
   },
   "suggests": {
     "flamingo": "*"
+  },
+  "custom": {
+    "mc-publish": {
+      "modrinth": "6EdNfDXb",
+      "curseforge": 365273
+    }
   }
 }
