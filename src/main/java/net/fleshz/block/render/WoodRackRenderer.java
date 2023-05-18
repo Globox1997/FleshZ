@@ -12,7 +12,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.RotationAxis;
-import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 
 @Environment(EnvType.CLIENT)
 public class WoodRackRenderer implements BlockEntityRenderer<WoodRackEntity> {
@@ -42,7 +42,7 @@ public class WoodRackRenderer implements BlockEntityRenderer<WoodRackEntity> {
                     matrices.translate(0.5D, 0.12D, 0.28D);
                     matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((90F)));
                 }
-                MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getStack(0), ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers,
+                MinecraftClient.getInstance().getItemRenderer().renderItem(blockEntity.getStack(0), ModelTransformationMode.GROUND, light, overlay, matrices, vertexConsumers, blockEntity.getWorld(),
                         (int) blockEntity.getPos().asLong());
                 matrices.pop();
             }
