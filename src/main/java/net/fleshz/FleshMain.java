@@ -4,6 +4,9 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.fleshz.block.WoodRack;
 import net.fleshz.block.entity.WoodRackEntity;
 import net.fleshz.recipe.RecipeInit;
@@ -41,6 +44,19 @@ public class FleshMain implements ModInitializer {
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> entries.add(WOOD_RACK));
         RecipeInit.init();
+        if (FabricLoader.getInstance().isModLoaded("adventurez")) {
+            ResourceManagerHelper.registerBuiltinResourcePack(new Identifier("fleshz", "adventurez_compat"), FabricLoader.getInstance().getModContainer("fleshz").orElseThrow(),
+                    ResourcePackActivationType.DEFAULT_ENABLED);
+        }
+        if (FabricLoader.getInstance().isModLoaded("naturalist")) {
+            ResourceManagerHelper.registerBuiltinResourcePack(new Identifier("fleshz", "naturalist_compat"), FabricLoader.getInstance().getModContainer("fleshz").orElseThrow(),
+                    ResourcePackActivationType.DEFAULT_ENABLED);
+        }
+        if (FabricLoader.getInstance().isModLoaded("meadow")) {
+            ResourceManagerHelper.registerBuiltinResourcePack(new Identifier("fleshz", "meadow_compat"), FabricLoader.getInstance().getModContainer("fleshz").orElseThrow(),
+                    ResourcePackActivationType.DEFAULT_ENABLED);
+        }
+
     }
 }
 

@@ -1,6 +1,6 @@
 ### Added:
-- 
+- Added adventurez, meadow, naturalist compat
 ### Fixed:
 - 
 ### Changed:
-- Updated to mc 1.20.1
+- 
