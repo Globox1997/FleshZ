@@ -11,6 +11,7 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.collection.DefaultedList;
@@ -53,11 +54,12 @@ public class WoodRackEntity extends BlockEntity implements Inventory {
     }
 
     private void update() {
-        if (!this.world.isClient && !isEmpty() && RecipeInit.RACK_ITEM_LIST.contains(this.getStack(0).getItem())) {
+        if (!this.getWorld().isClient() && !this.isEmpty() && RecipeInit.RACK_ITEM_LIST.contains(this.getStack(0).getItem())) {
             ++this.processTime;
             if (this.processTime >= this.dryingTime) {
-                this.setStack(0, new ItemStack(result));
+                this.setStack(0, new ItemStack(this.result != null ? this.result : Items.AIR));
                 this.processTime = 0;
+
             }
         }
     }
@@ -109,6 +111,16 @@ public class WoodRackEntity extends BlockEntity implements Inventory {
     public void setStack(int slot, ItemStack stack) {
         this.clear();
         this.inventory.set(0, stack);
+        if (stack.isEmpty()) {
+            this.dryingTime = 10000;
+            this.result = null;
+            this.index = 0;
+        } else if (RecipeInit.RACK_ITEM_LIST.contains(stack.getItem())) {
+            int index = RecipeInit.RACK_ITEM_LIST.indexOf(stack.getItem());
+            this.dryingTime = RecipeInit.RACK_RESULT_TIME_LIST.get(index);
+            this.result = RecipeInit.RACK_RESULT_ITEM_LIST.get(index);
+            this.index = index;
+        }
         this.markDirty();
     }
 

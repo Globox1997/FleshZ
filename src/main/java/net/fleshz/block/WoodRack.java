@@ -60,7 +60,7 @@ public class WoodRack extends Block implements BlockEntityProvider {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, FleshMain.WOOD_RACK_ENTITY, world.isClient ? null : WoodRackEntity::serverTick);
+        return checkType(type, FleshMain.WOOD_RACK_ENTITY, world.isClient() ? null : WoodRackEntity::serverTick);
     }
 
     @Override
@@ -71,26 +71,24 @@ public class WoodRack extends Block implements BlockEntityProvider {
             // Hang item on rack
             ItemStack heldItem = player.getMainHandStack();
             if (!heldItem.isEmpty() && RecipeInit.RACK_ITEM_LIST.contains(heldItem.getItem())) {
-                if (!world.isClient) {
-                    int index = RecipeInit.RACK_ITEM_LIST.indexOf(heldItem.getItem());
-                    woodReckEntity.dryingTime = RecipeInit.RACK_RESULT_TIME_LIST.get(index);
-                    woodReckEntity.result = RecipeInit.RACK_RESULT_ITEM_LIST.get(index);
-                    woodReckEntity.index = index;
-                    if (player.isCreative())
+                if (!world.isClient()) {
+                    if (player.isCreative()) {
                         woodReckEntity.setStack(0, heldItem.copy());
-                    else
+                    } else {
                         woodReckEntity.setStack(0, heldItem.split(1));
+                    }
                 }
-                return ActionResult.success(world.isClient);
+                return ActionResult.success(world.isClient());
             }
             return ActionResult.CONSUME;
         } else {
             // Remove hanging item
-            if (!world.isClient && !player.giveItemStack(stack.split(1)))
+            if (!world.isClient() && !player.giveItemStack(stack.split(1))) {
                 player.dropItem(stack.split(1), false);
+            }
 
             woodReckEntity.clear();
-            return ActionResult.success(world.isClient);
+            return ActionResult.success(world.isClient());
         }
     }
 
