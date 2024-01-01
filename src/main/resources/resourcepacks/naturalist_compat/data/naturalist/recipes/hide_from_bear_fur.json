@@ -3,11 +3,11 @@
     "group": "naturalist:leather",
     "ingredients": [
         {
-            "item": "naturalist:reptile_hide"
+            "item": "naturalist:bear_fur"
         }
     ],
     "result": {
         "item": "fleshz:hide",
-        "count": 2
+        "count": 1
     }
 }
