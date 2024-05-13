@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -31,22 +32,22 @@ public class WoodRackEntity extends BlockEntity implements Inventory {
     }
 
     @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
+    public void readNbt(NbtCompound nbt, WrapperLookup registryLookup) {
+        super.readNbt(nbt, registryLookup);
         this.dryingTime = nbt.getInt("Drying_Time");
         this.index = nbt.getInt("Rack_Index");
         this.inventory.clear();
-        Inventories.readNbt(nbt, inventory);
+        Inventories.readNbt(nbt, inventory, registryLookup);
         if (!isEmpty() && !RecipeInit.RACK_RESULT_ITEM_LIST.isEmpty() && RecipeInit.RACK_RESULT_ITEM_LIST.size() > index)
             this.result = RecipeInit.RACK_RESULT_ITEM_LIST.get(index);
     }
 
     @Override
-    public void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
+    public void writeNbt(NbtCompound nbt, WrapperLookup registryLookup) {
+        super.writeNbt(nbt, registryLookup);
         nbt.putInt("Drying_Time", dryingTime);
         nbt.putInt("Rack_Index", index);
-        Inventories.writeNbt(nbt, inventory);
+        Inventories.writeNbt(nbt, inventory, registryLookup);
     }
 
     public static void serverTick(World world, BlockPos pos, BlockState state, WoodRackEntity blockEntity) {
@@ -141,8 +142,8 @@ public class WoodRackEntity extends BlockEntity implements Inventory {
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        return this.createNbt();
+    public NbtCompound toInitialChunkDataNbt(WrapperLookup registryLookup) {
+        return this.createNbt(registryLookup);
     }
 
 }

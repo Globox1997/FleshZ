@@ -1,7 +1,6 @@
 ### Added:
 - 
 ### Fixed:
-- Fixed trader llama drop
-- Fixed naturalist compat
-### Changed:
 - 
+### Changed:
+- Updated to mc 1.20.6

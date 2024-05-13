@@ -1,15 +1,21 @@
 package net.fleshz;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fleshz.block.WoodRack;
 import net.fleshz.block.entity.WoodRackEntity;
+import net.fleshz.network.RottenServerPacket;
+import net.fleshz.network.packet.RackPacket;
 import net.fleshz.recipe.RecipeInit;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
@@ -25,12 +31,11 @@ public class FleshMain implements ModInitializer {
     public static final Item HIDE = new Item(new Item.Settings());
     public static final Item PREPARED_HIDE = new Item(new Item.Settings());
 
-    public static final WoodRack WOOD_RACK = new WoodRack(FabricBlockSettings.copy(Blocks.OAK_PLANKS));
-    public static final BlockEntityType<WoodRackEntity> WOOD_RACK_ENTITY = FabricBlockEntityTypeBuilder.create(WoodRackEntity::new, WOOD_RACK).build(null);;
+    public static final WoodRack WOOD_RACK = new WoodRack(AbstractBlock.Settings.copy(Blocks.OAK_PLANKS));
+    public static final BlockEntityType<WoodRackEntity> WOOD_RACK_ENTITY = BlockEntityType.Builder.create(WoodRackEntity::new, WOOD_RACK).build(null);;
 
     @Override
     public void onInitialize() {
-
         Registry.register(Registries.ITEM, new Identifier("fleshz", "rotten_leather"), ROTTEN_LEATHER);
         Registry.register(Registries.ITEM, new Identifier("fleshz", "hide"), HIDE);
         Registry.register(Registries.ITEM, new Identifier("fleshz", "prepared_hide"), PREPARED_HIDE);
@@ -44,6 +49,7 @@ public class FleshMain implements ModInitializer {
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> entries.add(WOOD_RACK));
         RecipeInit.init();
+        RottenServerPacket.init();
         if (FabricLoader.getInstance().isModLoaded("adventurez")) {
             ResourceManagerHelper.registerBuiltinResourcePack(new Identifier("fleshz", "adventurez_compat"), FabricLoader.getInstance().getModContainer("fleshz").orElseThrow(),
                     ResourcePackActivationType.DEFAULT_ENABLED);
@@ -56,7 +62,18 @@ public class FleshMain implements ModInitializer {
             ResourceManagerHelper.registerBuiltinResourcePack(new Identifier("fleshz", "meadow_compat"), FabricLoader.getInstance().getModContainer("fleshz").orElseThrow(),
                     ResourcePackActivationType.DEFAULT_ENABLED);
         }
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+            List<Integer> rackItems = new ArrayList<Integer>();
+            List<Integer> rackResultItems = new ArrayList<Integer>();
 
+            for (int i = 0; i < RecipeInit.RACK_ITEM_LIST.size(); i++) {
+                rackItems.add(Registries.ITEM.getRawId(RecipeInit.RACK_ITEM_LIST.get(i)));
+            }
+            for (int i = 0; i < RecipeInit.RACK_RESULT_ITEM_LIST.size(); i++) {
+                rackResultItems.add(Registries.ITEM.getRawId(RecipeInit.RACK_RESULT_ITEM_LIST.get(i)));
+            }
+            ServerPlayNetworking.send(handler.player, new RackPacket(rackItems, rackResultItems, RecipeInit.RACK_RESULT_TIME_LIST));
+        });
     }
 }
 
