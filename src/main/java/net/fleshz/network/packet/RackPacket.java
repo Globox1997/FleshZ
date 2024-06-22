@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 
 public record RackPacket(List<Integer> rackItems, List<Integer> rackResultItems, List<Integer> rackResultTimes) implements CustomPayload {
 
-    public static final CustomPayload.Id<RackPacket> PACKET_ID = new CustomPayload.Id<>(new Identifier("fleshz", "rack_recipes_packet"));
+    public static final CustomPayload.Id<RackPacket> PACKET_ID = new CustomPayload.Id<>(Identifier.of("fleshz", "rack_recipes_packet"));
 
     public static final PacketCodec<RegistryByteBuf, RackPacket> PACKET_CODEC = PacketCodec.of((value, buf) -> {
         buf.writeIntList(new IntArrayList(value.rackItems));

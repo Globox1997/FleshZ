@@ -20,7 +20,7 @@ public class FleshEmiRecipe implements EmiRecipe {
     private final List<EmiStack> output;
 
     public FleshEmiRecipe(Item item) {
-        this.id = new Identifier("fleshz", "rack_" + Registries.ITEM.getId(item).getPath());
+        this.id = Identifier.of("fleshz", "rack_" + Registries.ITEM.getId(item).getPath());
         int index = RecipeInit.RACK_ITEM_LIST.indexOf(item);
 
         this.input = List.of(EmiIngredient.of(Ingredient.ofItems(item)));

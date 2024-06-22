@@ -36,11 +36,11 @@ public class FleshMain implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        Registry.register(Registries.ITEM, new Identifier("fleshz", "rotten_leather"), ROTTEN_LEATHER);
-        Registry.register(Registries.ITEM, new Identifier("fleshz", "hide"), HIDE);
-        Registry.register(Registries.ITEM, new Identifier("fleshz", "prepared_hide"), PREPARED_HIDE);
-        Registry.register(Registries.ITEM, new Identifier("fleshz", "wood_rack"), new BlockItem(WOOD_RACK, new Item.Settings()));
-        Registry.register(Registries.BLOCK, new Identifier("fleshz", "wood_rack"), WOOD_RACK);
+        Registry.register(Registries.ITEM, Identifier.of("fleshz", "rotten_leather"), ROTTEN_LEATHER);
+        Registry.register(Registries.ITEM, Identifier.of("fleshz", "hide"), HIDE);
+        Registry.register(Registries.ITEM, Identifier.of("fleshz", "prepared_hide"), PREPARED_HIDE);
+        Registry.register(Registries.ITEM, Identifier.of("fleshz", "wood_rack"), new BlockItem(WOOD_RACK, new Item.Settings()));
+        Registry.register(Registries.BLOCK, Identifier.of("fleshz", "wood_rack"), WOOD_RACK);
         Registry.register(Registries.BLOCK_ENTITY_TYPE, "fleshz:wood_rack_entity", WOOD_RACK_ENTITY);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
             entries.add(HIDE);
@@ -51,15 +51,15 @@ public class FleshMain implements ModInitializer {
         RecipeInit.init();
         RottenServerPacket.init();
         if (FabricLoader.getInstance().isModLoaded("adventurez")) {
-            ResourceManagerHelper.registerBuiltinResourcePack(new Identifier("fleshz", "adventurez_compat"), FabricLoader.getInstance().getModContainer("fleshz").orElseThrow(),
+            ResourceManagerHelper.registerBuiltinResourcePack(Identifier.of("fleshz", "adventurez_compat"), FabricLoader.getInstance().getModContainer("fleshz").orElseThrow(),
                     ResourcePackActivationType.DEFAULT_ENABLED);
         }
         if (FabricLoader.getInstance().isModLoaded("naturalist")) {
-            ResourceManagerHelper.registerBuiltinResourcePack(new Identifier("fleshz", "naturalist_compat"), FabricLoader.getInstance().getModContainer("fleshz").orElseThrow(),
+            ResourceManagerHelper.registerBuiltinResourcePack(Identifier.of("fleshz", "naturalist_compat"), FabricLoader.getInstance().getModContainer("fleshz").orElseThrow(),
                     ResourcePackActivationType.DEFAULT_ENABLED);
         }
         if (FabricLoader.getInstance().isModLoaded("meadow")) {
-            ResourceManagerHelper.registerBuiltinResourcePack(new Identifier("fleshz", "meadow_compat"), FabricLoader.getInstance().getModContainer("fleshz").orElseThrow(),
+            ResourceManagerHelper.registerBuiltinResourcePack(Identifier.of("fleshz", "meadow_compat"), FabricLoader.getInstance().getModContainer("fleshz").orElseThrow(),
                     ResourcePackActivationType.DEFAULT_ENABLED);
         }
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {

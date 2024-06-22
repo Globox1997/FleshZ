@@ -20,7 +20,7 @@ public class RackRecipeLoader implements SimpleSynchronousResourceReloadListener
 
     @Override
     public Identifier getFabricId() {
-        return new Identifier("fleshz", "rack_items");
+        return Identifier.of("fleshz", "rack_items");
     }
 
     @Override
@@ -30,11 +30,11 @@ public class RackRecipeLoader implements SimpleSynchronousResourceReloadListener
                 InputStream stream = resourceRef.getInputStream();
                 JsonObject data = JsonParser.parseReader(new InputStreamReader(stream)).getAsJsonObject();
 
-                if (Registries.ITEM.get(new Identifier(data.get("item").getAsString())).toString().equals("air")) {
+                if (Registries.ITEM.get(Identifier.of(data.get("item").getAsString())).toString().equals("air")) {
                     LOGGER.info("{} is not a valid item identifier at resouce {}", data.get("item").getAsString(), id.toString());
                     return;
                 }
-                if (Registries.ITEM.get(new Identifier(data.get("result").getAsString())).toString().equals("air")) {
+                if (Registries.ITEM.get(Identifier.of(data.get("result").getAsString())).toString().equals("air")) {
                     LOGGER.info("{} is not a valid item identifier at resouce {}", data.get("result").getAsString(), id.toString());
                     return;
                 }
@@ -43,8 +43,8 @@ public class RackRecipeLoader implements SimpleSynchronousResourceReloadListener
                     return;
                 }
 
-                RecipeInit.RACK_ITEM_LIST.add((Item) Registries.ITEM.get(new Identifier(data.get("item").getAsString())));
-                RecipeInit.RACK_RESULT_ITEM_LIST.add((Item) Registries.ITEM.get(new Identifier(data.get("result").getAsString())));
+                RecipeInit.RACK_ITEM_LIST.add((Item) Registries.ITEM.get(Identifier.of(data.get("item").getAsString())));
+                RecipeInit.RACK_RESULT_ITEM_LIST.add((Item) Registries.ITEM.get(Identifier.of(data.get("result").getAsString())));
                 RecipeInit.RACK_RESULT_TIME_LIST.add(data.get("time").getAsInt());
 
             } catch (Exception e) {
