@@ -2,8 +2,18 @@
     "item.fleshz.rotten_leather": "Rotten Leather",
     "item.fleshz.hide": "Hide",
     "item.fleshz.prepared_hide": "Prepared Hide",
-    "item.fleshz.wood_rack": "Wood Rack",
-    "block.fleshz.wood_rack": "Wood Rack",
 
-    "emi.category.fleshz.rack": "Rack Drying"
+    "emi.category.fleshz.rack": "Rack Drying",
+
+    "block.fleshz.acacia_wood_rack": "Acacia Wood Rack",
+    "block.fleshz.bamboo_wood_rack": "Bamboo Wood Rack",
+    "block.fleshz.birch_wood_rack": "Birch Wood Rack",
+    "block.fleshz.cherry_wood_rack": "Cherry Wood Rack",
+    "block.fleshz.crimson_wood_rack": "Crimson Wood Rack",
+    "block.fleshz.dark_oak_wood_rack": "Dark Oak Wood Rack",
+    "block.fleshz.jungle_wood_rack": "Jungle Wood Rack",
+    "block.fleshz.mangrove_wood_rack": "Mangrove Wood Rack",
+    "block.fleshz.oak_wood_rack": "Oak Wood Rack",
+    "block.fleshz.spruce_wood_rack": "Spruce Wood Rack",
+    "block.fleshz.warped_wood_rack": "Warped Wood Rack"
 }

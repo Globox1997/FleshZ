@@ -5,14 +5,14 @@ import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.render.EmiTexture;
 import dev.emi.emi.api.stack.EmiStack;
-import net.fleshz.FleshMain;
-import net.fleshz.recipe.RecipeInit;
+import net.fleshz.init.BlockInit;
+import net.fleshz.init.RecipeInit;
 import net.minecraft.util.Identifier;
 
 public class FleshEmiPlugin implements EmiPlugin {
 
     public static final Identifier MY_SPRITE_SHEET = Identifier.of("fleshz", "textures/item/hide.png");
-    public static final EmiStack RACK = EmiStack.of(FleshMain.WOOD_RACK);
+    public static final EmiStack RACK = EmiStack.of(BlockInit.OAK_WOOD_RACK);
     public static final EmiRecipeCategory RACK_CATEGORY = new EmiRecipeCategory(Identifier.of("fleshz", "rack"), RACK, new EmiTexture(MY_SPRITE_SHEET, 0, 0, 16, 16));
 
     @Override

@@ -1,9 +1,10 @@
 package net.fleshz.block.entity;
 
+import net.fleshz.init.BlockInit;
 import org.jetbrains.annotations.Nullable;
 
 import net.fleshz.FleshMain;
-import net.fleshz.recipe.RecipeInit;
+import net.fleshz.init.RecipeInit;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,7 +29,7 @@ public class WoodRackEntity extends BlockEntity implements Inventory {
     private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(1, ItemStack.EMPTY);
 
     public WoodRackEntity(BlockPos pos, BlockState state) {
-        super(FleshMain.WOOD_RACK_ENTITY, pos, state);
+        super(BlockInit.WOOD_RACK_ENTITY, pos, state);
     }
 
     @Override

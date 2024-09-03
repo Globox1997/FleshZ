@@ -2,7 +2,8 @@ package net.fleshz.block;
 
 import net.fleshz.FleshMain;
 import net.fleshz.block.entity.WoodRackEntity;
-import net.fleshz.recipe.RecipeInit;
+import net.fleshz.init.BlockInit;
+import net.fleshz.init.RecipeInit;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -58,7 +59,7 @@ public class WoodRack extends Block implements BlockEntityProvider {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, FleshMain.WOOD_RACK_ENTITY, world.isClient() ? null : WoodRackEntity::serverTick);
+        return checkType(type, BlockInit.WOOD_RACK_ENTITY, world.isClient() ? null : WoodRackEntity::serverTick);
     }
 
     @Override

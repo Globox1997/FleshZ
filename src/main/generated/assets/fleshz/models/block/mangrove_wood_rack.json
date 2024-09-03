@@ -1,0 +1,6 @@
+{
+  "parent": "fleshz:block/rack",
+  "textures": {
+    "texture": "minecraft:block/mangrove_planks"
+  }
+}

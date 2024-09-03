@@ -6,7 +6,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fleshz.network.packet.RackPacket;
-import net.fleshz.recipe.RecipeInit;
+import net.fleshz.init.RecipeInit;
 import net.minecraft.registry.Registries;
 
 @Environment(EnvType.CLIENT)

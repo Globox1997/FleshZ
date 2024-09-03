@@ -21,6 +21,9 @@
     "client": [
       "net.fleshz.FleshClient"
     ],
+    "fabric-datagen": [
+      "net.fleshz.FleshDataGenerator"
+    ],
     "emi": [
       "net.fleshz.compat.FleshEmiPlugin"
     ]

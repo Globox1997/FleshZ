@@ -1,0 +1,6 @@
+{
+  "parent": "fleshz:block/rack",
+  "textures": {
+    "texture": "minecraft:block/crimson_planks"
+  }
+}
