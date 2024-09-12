@@ -1,0 +1,18 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "nemos-woodcutter"
+      ]
+    }
+  ],
+  "type": "nemos-woodcutter:woodcutting",
+  "ingredient": {
+    "item": "minecraft:oak_slab"
+  },
+  "result": {
+    "count": 1,
+    "id": "fleshz:oak_wood_rack"
+  }
+}
