@@ -1,0 +1,10 @@
+{
+    "type": "fleshz:rack_drying",
+    "ingredient": {
+        "item": "minecraft:kelp"
+    },
+    "result": {
+        "id": "minecraft:dried_kelp"
+    },
+    "time": 2400
+}

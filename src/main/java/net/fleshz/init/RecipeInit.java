@@ -1,20 +1,22 @@
 package net.fleshz.init;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.fleshz.loader.RackRecipeLoader;
-import net.minecraft.item.Item;
-import net.minecraft.resource.ResourceType;
+import net.fleshz.FleshMain;
+import net.fleshz.recipe.RackRecipe;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 
 public class RecipeInit {
 
-    public static final List<Item> RACK_ITEM_LIST = new ArrayList<>();
-    public static final List<Item> RACK_RESULT_ITEM_LIST = new ArrayList<>();
-    public static final List<Integer> RACK_RESULT_TIME_LIST = new ArrayList<>();
+    public static final RecipeType<RackRecipe> RACK_DRYING = Registry.register(Registries.RECIPE_TYPE, FleshMain.identifierOf("rack_drying"), new RecipeType<RackRecipe>() {
+        @Override
+        public String toString() {
+            return "fleshz:rack_drying";
+        }
+    });
+    public static final RecipeSerializer<RackRecipe> RACK_DRYING_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, FleshMain.identifierOf("rack_drying"), new RackRecipe.Serializer());
 
     public static void init() {
-        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new RackRecipeLoader());
     }
 }

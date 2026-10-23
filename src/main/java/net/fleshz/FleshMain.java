@@ -5,7 +5,6 @@ import net.fleshz.init.BlockInit;
 import net.fleshz.init.EventInit;
 import net.fleshz.init.ItemInit;
 import net.fleshz.init.RecipeInit;
-import net.fleshz.network.RottenServerPacket;
 import net.minecraft.util.Identifier;
 
 public class FleshMain implements ModInitializer {
@@ -15,7 +14,6 @@ public class FleshMain implements ModInitializer {
         BlockInit.init();
         ItemInit.init();
         RecipeInit.init();
-        RottenServerPacket.init();
         EventInit.init();
     }
 

@@ -1,0 +1,10 @@
+{
+    "type": "fleshz:rack_drying",
+    "ingredient": {
+        "item": "fleshz:prepared_hide"
+    },
+    "result": {
+        "id": "minecraft:leather"
+    },
+    "time": 4800
+}

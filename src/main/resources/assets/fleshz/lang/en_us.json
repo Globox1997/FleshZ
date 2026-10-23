@@ -4,6 +4,11 @@
     "item.fleshz.prepared_hide": "Prepared Hide",
 
     "emi.category.fleshz.rack": "Rack Drying",
+    "emi.fleshz.rack.time.seconds": "Time: %s s",
+    "emi.fleshz.rack.time.minutes": "Time: %s min",
+    "emi.fleshz.rack.faster": "Faster: hot, dry or sunny places and above heat",
+    "emi.fleshz.rack.slower": "Slower: cold places and humid weather",
+    "emi.fleshz.rack.paused": "Paused: in rain or underwater",
 
     "block.fleshz.acacia_wood_rack": "Acacia Wood Rack",
     "block.fleshz.bamboo_wood_rack": "Bamboo Wood Rack",
@@ -15,5 +20,8 @@
     "block.fleshz.mangrove_wood_rack": "Mangrove Wood Rack",
     "block.fleshz.oak_wood_rack": "Oak Wood Rack",
     "block.fleshz.spruce_wood_rack": "Spruce Wood Rack",
-    "block.fleshz.warped_wood_rack": "Warped Wood Rack"
+    "block.fleshz.warped_wood_rack": "Warped Wood Rack",
+
+    "tag.block.fleshz.rack_heat_sources": "Rack Heat Sources",
+    "tag.item.c.hides": "Hides"
 }

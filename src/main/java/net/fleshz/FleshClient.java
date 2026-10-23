@@ -6,7 +6,6 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fleshz.block.render.WoodRackRenderer;
 import net.fleshz.init.BlockInit;
-import net.fleshz.network.RottenClientPacket;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
@@ -20,7 +19,6 @@ public class FleshClient implements ClientModInitializer {
             BlockRenderLayerMap.INSTANCE.putBlock(entry, RenderLayer.getCutout());
         }
         BlockEntityRendererFactories.register(BlockInit.WOOD_RACK_ENTITY, WoodRackRenderer::new);
-        RottenClientPacket.init();
     }
 
 }

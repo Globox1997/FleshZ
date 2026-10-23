@@ -1,0 +1,10 @@
+{
+    "type": "fleshz:rack_drying",
+    "ingredient": {
+        "item": "fleshz:rotten_leather"
+    },
+    "result": {
+        "id": "fleshz:hide"
+    },
+    "time": 4800
+}

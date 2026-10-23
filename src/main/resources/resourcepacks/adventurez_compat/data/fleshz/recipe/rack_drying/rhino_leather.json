@@ -1,0 +1,10 @@
+{
+    "type": "fleshz:rack_drying",
+    "ingredient": {
+        "item": "adventurez:rhino_leather"
+    },
+    "result": {
+        "id": "minecraft:leather"
+    },
+    "time": 4800
+}
