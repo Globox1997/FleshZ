@@ -1,14 +1,13 @@
 package net.fleshz.block;
 
-import net.fleshz.FleshMain;
 import net.fleshz.block.entity.WoodRackEntity;
 import net.fleshz.init.BlockInit;
-import net.fleshz.init.RecipeInit;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -25,6 +24,8 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -37,7 +38,7 @@ import net.minecraft.world.WorldView;
 import net.minecraft.block.ShapeContext;
 import org.jetbrains.annotations.Nullable;
 
-public class WoodRack extends Block implements BlockEntityProvider {
+public class WoodRack extends Block implements BlockEntityProvider, Waterloggable {
 
     public static final VoxelShape SHAPENORTH;
     public static final VoxelShape SHAPEWEST;
@@ -63,48 +64,46 @@ public class WoodRack extends Block implements BlockEntityProvider {
     }
 
     @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        WoodRackEntity woodReckEntity = (WoodRackEntity) world.getBlockEntity(pos);
-        ItemStack stack = woodReckEntity.getStack(0);
-        if (stack.isEmpty()) {
-            // Hang item on rack
-            ItemStack heldItem = player.getMainHandStack();
-            if (!heldItem.isEmpty() && RecipeInit.RACK_ITEM_LIST.contains(heldItem.getItem())) {
-                if (!world.isClient()) {
-                    if (player.isCreative()) {
-                        woodReckEntity.setStack(0, heldItem.copy());
-                    } else {
-                        woodReckEntity.setStack(0, heldItem.split(1));
-                    }
-                }
-                return ActionResult.success(world.isClient());
+    protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (world.getBlockEntity(pos) instanceof WoodRackEntity woodRackEntity && woodRackEntity.isEmpty() && woodRackEntity.isValid(0, stack)) {
+            if (!world.isClient()) {
+                woodRackEntity.setStack(0, stack.splitUnlessCreative(1, player));
             }
-            return ActionResult.CONSUME;
-        } else {
-            // Remove hanging item
-            if (!world.isClient() && !player.giveItemStack(stack.split(1))) {
-                player.dropItem(stack.split(1), false);
-            }
+            return ItemActionResult.success(world.isClient());
+        }
+        return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
 
-            woodReckEntity.clear();
+    @Override
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+        if (world.getBlockEntity(pos) instanceof WoodRackEntity woodRackEntity && !woodRackEntity.isEmpty()) {
+            if (!world.isClient()) {
+                player.getInventory().offerOrDrop(woodRackEntity.removeStack(0));
+            }
             return ActionResult.success(world.isClient());
         }
+        return ActionResult.PASS;
+    }
+
+    @Override
+    protected boolean hasComparatorOutput(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+        return world.getBlockEntity(pos) instanceof WoodRackEntity woodRackEntity ? woodRackEntity.getComparatorOutput() : 0;
     }
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
-        switch ((Direction) state.get(FACING)) {
-        case NORTH:
-            return SHAPENORTH;
-        case SOUTH:
-            return SHAPESOUTH;
-        case WEST:
-            return SHAPEWEST;
-        case EAST:
-            return SHAPEEAST;
-        default:
-            return SHAPEEAST;
-        }
+        return switch ((Direction) state.get(FACING)) {
+            case NORTH -> SHAPENORTH;
+            case SOUTH -> SHAPESOUTH;
+            case WEST -> SHAPEWEST;
+            case EAST -> SHAPEEAST;
+            default -> SHAPEEAST;
+        };
     }
 
     private boolean canPlaceOn(BlockView world, BlockPos pos, Direction side) {
