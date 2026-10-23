@@ -22,7 +22,8 @@
                                 "max": 2,
                                 "min": 0
                             },
-                            "function": "minecraft:looting_enchant"
+                            "enchantment": "minecraft:looting",
+                            "function": "minecraft:enchanted_count_increase"
                         }
                     ],
                     "name": "fleshz:hide"
@@ -65,7 +66,8 @@
                                 "max": 4,
                                 "min": 0
                             },
-                            "function": "minecraft:looting_enchant"
+                            "enchantment": "minecraft:looting",
+                            "function": "minecraft:enchanted_count_increase"
                         }
                     ],
                     "name": "meadow:raw_buffalo_meat"
