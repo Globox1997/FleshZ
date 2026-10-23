@@ -24,7 +24,7 @@ public class WoodRackRenderer implements BlockEntityRenderer<WoodRackEntity> {
     public void render(WoodRackEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         if (!blockEntity.isEmpty() && blockEntity.getWorld() != null) {
             BlockState blockState = blockEntity.getWorld().getBlockState(blockEntity.getPos());
-            if (!blockState.isAir()) {
+            if (blockState.contains(HorizontalFacingBlock.FACING)) {
                 Direction blockDirection = blockState.get(HorizontalFacingBlock.FACING);
                 matrices.push();
                 if (blockDirection == Direction.NORTH) {
