@@ -13,6 +13,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
@@ -22,6 +24,8 @@ import java.util.Map;
 public class BlockInit {
 
     public static final Map<Block, List<Block>> RACKS = new HashMap<>();
+
+    public static final TagKey<Block> RACK_HEAT_SOURCES = TagKey.of(RegistryKeys.BLOCK, FleshMain.identifierOf("rack_heat_sources"));
 
     public static final Block OAK_WOOD_RACK = register("oak_wood_rack", new WoodRack(AbstractBlock.Settings.copy(Blocks.OAK_PLANKS)), Blocks.OAK_PLANKS, Blocks.OAK_SLAB);
     public static final Block SPRUCE_WOOD_RACK = register("spruce_wood_rack", new WoodRack(AbstractBlock.Settings.copy(Blocks.SPRUCE_PLANKS)), Blocks.SPRUCE_PLANKS, Blocks.SPRUCE_SLAB);
