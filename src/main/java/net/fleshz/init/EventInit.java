@@ -20,5 +20,9 @@ public class EventInit {
             ResourceManagerHelper.registerBuiltinResourcePack(Identifier.of("fleshz", "meadow_compat"), FabricLoader.getInstance().getModContainer("fleshz").orElseThrow(),
                     ResourcePackActivationType.DEFAULT_ENABLED);
         }
+        if (FabricLoader.getInstance().isModLoaded("untamed")) {
+            ResourceManagerHelper.registerBuiltinResourcePack(Identifier.of("fleshz", "untamed_compat"), FabricLoader.getInstance().getModContainer("fleshz").orElseThrow(),
+                    ResourcePackActivationType.DEFAULT_ENABLED);
+        }
     }
 }
